@@ -1,15 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const PORT = 3000;
 const db = require('./config/db');
 const path = require('path');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-const routes = require('./routes/index');
-app.use('/', routes);
 
 db.connect()
   .then(() => {
