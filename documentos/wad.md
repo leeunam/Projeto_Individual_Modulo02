@@ -284,7 +284,32 @@ CREATE TABLE inscricoes (
 
 ### 3.3. Wireframes (Semana 03)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização).*
+A seguir, apresento os wireframes das principais funcionalidades da plataforma, diretamente relacionados às User Stories (US) descritas anteriormente.
+
+#### Tela de Participante
+![Tela participantes de Eventos](../assets/participante.png)
+**Relação com US**:
+
+- **US02**: Como participante, desejo visualizar detalhes de um evento e me inscrever em atividades específicas.
+- A tela mostra as informações do evento de forma acessível, com opção de inscrição por atividade.
+
+
+#### Tela de Criação de Evento:
+
+![Tela Criação de Eventos](../assets/criar.png)
+
+**Relação com US**:
+- **US01**: Como organizador, desejo criar um evento com nome, descrição, data e atividades, para divulgar e permitir inscrições.
+- Esta tela permite ao organizador inserir as informações principais do evento e estruturar sua programação.
+
+#### Tela de Gerenciamento de Evento
+![Tela Gerenciamento de Eventos](../assets/gerenciar.png)
+
+**Relação com US**:
+- **US01**: Como organizador, desejo gerenciar os dados do meu evento, visualizar inscritos e atualizar informações.
+- A interface permite acesso às inscrições, edição do evento e acompanhamento da participação em tempo real.
+
+[Link Complementar (Figma)](https://www.figma.com/design/Zhon5TjMIgSFq4zLD4IwnW/Projeto-Individual?node-id=0-1&t=6RkaWsnYNhUCVPaO-1)
 
 ### 3.4. Guia de estilos (Semana 05)
 
