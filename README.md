@@ -58,6 +58,7 @@ npm start ou node server.js
 ```
 
 🧑‍💻 Autor
+
 Desenvolvido por Leunam Sousa de Jesus
 
 [LinkedIn](https://www.linkedin.com/in/leunam/)
