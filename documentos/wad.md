@@ -14,7 +14,7 @@
 
 <br>
 
-## <a name="c1"></a>1. Introdução (Semana 01)
+## <a name="c1"></a>1. Introdução
 
 Esse projeto tem como objetivo o desenvolvimento de uma **plataforma web para gerenciamento de eventos e inscrições**, voltada para oferecer uma experiência prática e organizada tanto para organizadores quanto para participantes. O sistema permitirá a criação e divulgação de eventos, inscrição de usuários com envio automático de e-mails de confirmação, geração de **QR Codes exclusivos** para entrada e um processo de **check-in digital** no local do evento.
 
@@ -282,7 +282,7 @@ CREATE TABLE inscricoes (
   
 *Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
 
-### 3.3. Wireframes (Semana 03)
+### 3.3. Wireframes
 
 A seguir, apresento os wireframes das principais funcionalidades da plataforma, diretamente relacionados às User Stories (US) descritas anteriormente.
 
@@ -311,14 +311,42 @@ A seguir, apresento os wireframes das principais funcionalidades da plataforma, 
 
 [Link Complementar (Figma)](https://www.figma.com/design/Zhon5TjMIgSFq4zLD4IwnW/Projeto-Individual?node-id=0-1&t=6RkaWsnYNhUCVPaO-1)
 
-### 3.4. Guia de estilos (Semana 05)
+### 3.4. Guia de estilos
 
-*Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
+Este guia de estilos foi desenvolvido para garantir consistência visual, legibilidade e uma experiência amigável aos usuários do sistema de gerenciamento de eventos.
 
+**Guia de Estilos**
+![GuiaEstilo](../assets/Guia.png)
 
-### 3.5. Protótipo de alta fidelidade (Semana 05)
+---
 
-*Posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização).*
+### 3.5. Protótipo de alta fidelidade
+
+A seguir, imagens do protótipo de alta fidelidade da solução, que refletem as funcionalidades principais conforme definido nas User Stories e wireframes.
+
+#### 🖼 Telas demonstrativas
+
+**Tela de criar conta**
+![Inscrição Participante](../assets/Criar.png)
+
+**Tela de Eventos**
+![Inscrição Participante](../assets/Eventos.png)
+
+**Tela de Detalhes do Evento**
+![Inscrição Participante](../assets/Detalhes.png)
+
+**Tela de criação de evento**
+![Criar Evento](../assets/Criar.png)
+
+**Tela de gerenciamento de eventos**
+![Gerenciar Eventos](../assets/Gerenciar.png)
+
+**Tela de inscrição com QR Code**
+![Inscrição Participante](../assets/Inscrição.png)
+
+> **Acesse o protótipo completo aqui:**
+> [Protótipo Figma – Projeto Individual](https://www.figma.com/design/Zhon5TjMIgSFq4zLD4IwnW/Projeto-Individual?node-id=3332-556&t=2dYIhfYo43IedMCw-1)
+
 
 ### 3.6. WebAPI e endpoints (Semana 05)
 

@@ -1,54 +1,78 @@
-<h2>Página 1</h2>
-<p>Lista de Usuários:</p>
+<h1>Cadastro de Usuários</h1>
 
-<table border="1" id="usersTable">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan="3">Carregando usuários...</td>
-    </tr>
-  </tbody>
-</table>
+<form id="addUserForm">
+  <input name="name" placeholder="Nome" required>
+  <input name="email" placeholder="Email" required>
+  <button type="submit">Adicionar</button>
+</form>
+
+<hr>
+
+<ul id="usersList">
+
+</ul>
 
 <script>
-  // Função para buscar usuários da API e renderizar na tabela
+
   async function fetchUsers() {
-    try {
-      const response = await fetch('/users');
-      if (!response.ok) {
-        throw new Error('Erro ao buscar usuários');
-      }
-      const users = await response.json();
-
-      const tableBody = document.querySelector('#usersTable tbody');
-      tableBody.innerHTML = ''; // Limpa o conteúdo anterior
-
-      if (users.length > 0) {
-        users.forEach(user => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-          `;
-          tableBody.appendChild(row);
-        });
-      } else {
-        tableBody.innerHTML = '<tr><td colspan="3">Nenhum usuário encontrado.</td></tr>';
-      }
-    } catch (error) {
-      console.error(error);
-      const tableBody = document.querySelector('#usersTable tbody');
-      tableBody.innerHTML = '<tr><td colspan="3">Erro ao carregar usuários.</td></tr>';
-    }
+    const res = await fetch('/users');
+    const users = await res.json();
+    const list = document.getElementById('usersList');
+    list.innerHTML = '';
+    users.forEach(user => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span>${user.name} - ${user.email}</span>
+        <button onclick="showEditForm('${user.id}', '${user.name}', '${user.email}')">Editar</button>
+        <button onclick="deleteUser('${user.id}')">Apagar</button>
+        <form id="editForm-${user.id}" style="display:none" onsubmit="editUser(event, '${user.id}')">
+          <input name="name" placeholder="Novo nome" required>
+          <input name="email" placeholder="Novo email" required>
+          <button type="submit">Salvar</button>
+        </form>
+      `;
+      list.appendChild(li);
+    });
   }
 
-  // Chama a função ao carregar a página
+
+  document.getElementById('addUserForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    await fetch('/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: form.name.value, email: form.email.value })
+    });
+    form.reset();
+    fetchUsers();
+  };
+
+
+  function showEditForm(id, name, email) {
+    const form = document.getElementById(`editForm-${id}`);
+    form.style.display = 'inline';
+    form.name.value = name;
+    form.email.value = email;
+  }
+
+
+  async function editUser(e, id) {
+    e.preventDefault();
+    const form = e.target;
+    await fetch(`/users/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: form.name.value, email: form.email.value })
+    });
+    form.style.display = 'none';
+    fetchUsers();
+  }
+
+  async function deleteUser(id) {
+    await fetch(`/users/${id}`, { method: 'DELETE' });
+    fetchUsers();
+  }
+
   fetchUsers();
 </script>

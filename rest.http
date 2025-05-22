@@ -15,7 +15,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "name": "John Doe",
+  "nome": "John Doe",
   "email": "john@example.com"
 }
 
@@ -23,10 +23,9 @@ Content-Type: application/json
 
 # Teste da rota PUT /users/:id
 PUT http://localhost:3000/users/39602f41-b43e-4fa8-b7f7-34c7a516740b
-Content-Type: application/json
-
+Content-Type: application/jso
 {
-  "name": "Jane Doe",
+  "nome": "Jane Doe",
   "email": "jane@example.com"
 }
 

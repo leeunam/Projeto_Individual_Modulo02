@@ -1,8 +1,6 @@
-// services/userService.js
-
 const db = require('../config/db');
 
-// Função para obter todos os usuários
+
 const getAllUsers = async () => {
   try {
     const result = await db.query('SELECT * FROM users');
@@ -12,7 +10,6 @@ const getAllUsers = async () => {
   }
 };
 
-// Função para obter um usuário por ID
 const getUserById = async (id) => {
   try {
     const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
@@ -22,12 +19,11 @@ const getUserById = async (id) => {
   }
 };
 
-// Função para criar um novo usuário
-const createUser = async (name, email) => {
+const createUser = async (nome, email) => {
   try {
     const result = await db.query(
-      'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
-      [name, email]
+      'INSERT INTO users (nome, email) VALUES ($1, $2) RETURNING *',
+      [nome, email]
     );
     return result.rows[0];
   } catch (error) {
@@ -35,12 +31,11 @@ const createUser = async (name, email) => {
   }
 };
 
-// Função para atualizar um usuário por ID
-const updateUser = async (id, name, email) => {
+const updateUser = async (id, nome, email) => {
   try {
     const result = await db.query(
-      'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
-      [name, email, id]
+      'UPDATE users SET nome = $1, email = $2 WHERE id = $3 RETURNING *',
+      [nome, email, id]
     );
     return result.rows[0];
   } catch (error) {
@@ -48,7 +43,6 @@ const updateUser = async (id, name, email) => {
   }
 };
 
-// Função para deletar um usuário por ID
 const deleteUser = async (id) => {
   try {
     const result = await db.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
