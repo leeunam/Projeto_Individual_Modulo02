@@ -315,7 +315,6 @@ A seguir, apresento os wireframes das principais funcionalidades da plataforma, 
 
 Este guia de estilos foi desenvolvido para garantir consistência visual, legibilidade e uma experiência amigável aos usuários do sistema de gerenciamento de eventos.
 
-**Guia de Estilos**
 ![Guia de Estilo](../assets/Guia.png)
 
 ---
