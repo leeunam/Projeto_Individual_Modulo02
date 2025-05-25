@@ -6,51 +6,82 @@ O sistema permite cadastrar eventos e realizar inscrições de forma simples e e
 
 ---
 
-## 📁 Estrutura de Pastas (MVC)
+## 📁 Estrutura de Pastas
 ```
 projeto-eventos/
 │
-├── config/ # Configuração do banco de dados
-│ └── db.js
-├── controllers/ # Lógica de controle de dados
-│ └── eventController.js
-├── models/ # Modelos do banco 
-│ └── eventModels.js
-├── routes/ # Rotas da aplicação
-│ └── eventRoute.js
-├── .env.example # Variáveis de ambiente de exemplo
-├── .gitignore # Arquivos a serem ignorados no Github
-├── package.json ## Conjunto de dependências do projeto
-├── server.js # Ponto de entrada da aplicação
-└── README.md # Instrução e explicação do projeto
+├── assets/           # Arquivos estáticos (imagens, diagramas)
+├── config/           # Configurações do projeto
+│   └── db.js        # Configuração do banco de dados
+├── controllers/      # Controladores da aplicação
+│   ├── userController.js
+│   ├── eventController.js
+│   └── addressController.js
+├── models/          # Modelos do banco de dados
+│   ├── User.js
+│   ├── Event.js
+│   └── Address.js
+├── routes/          # Rotas da aplicação
+│   ├── userRoutes.js
+│   ├── eventRoutes.js
+│   └── addressRoutes.js
+├── views/           # Templates e arquivos frontend
+├── migrations/      # Arquivos de migração do banco
+├── documentos/      # Documentação do projeto
+├── scripts/         # Scripts úteis
+├── node_modules/    # Dependências do projeto
+├── .env.example     # Exemplo de variáveis de ambiente
+├── .gitignore      # Arquivos ignorados no git
+├── knexfile.js     # Configuração do Knex (migração funcional da aplicação)
+├── package.json    # Dependências e scripts
+├── server.js       # Ponto de entrada da aplicação
+└── README.md       # Este arquivo
 ```
 
----
+## Como Executar o Projeto
 
-## Como Executar o projeto localmente
+### Pré-requisitos
+- Node.js (versão 14 ou superior)
+- PostgreSQL (versão 12 ou superior)
+- NPM ou Yarn
 
-### 1. Utilize uma IDE (ex:Visual Studio Code)
-
-### 2. Clone o repositório
-
+### 1. Clone o repositório
 ```bash
 git clone https://github.com/leeunam/Projeto_Individual_Modulo02
+cd Projeto_Individual_Modulo02
 ```
 
-### 3. Abra o terminal (ctrl + j) e instale as dependências com o código abaixo:
+### 2. Configure as variáveis de ambiente
 ```bash
-npm init -y
-npm install 
-npm install express
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
 ```
 
-### 4. Ainda no terminal (ctrl + j), inicie o servidor com o código abaixo:
+### 3. Instale as dependências
 ```bash
-npm start ou node server.js
+npm install
 ```
 
-🧑‍💻 Autor
+### 4. Execute as migrações do banco de dados
+```bash
+npm run migrate
+```
+
+### 5. Inicie o servidor
+```bash
+npm run dev  # Para ambiente de desenvolvimento
+# ou
+npm start    # Para ambiente de produção
+```
+
+O servidor estará rodando em `http://localhost:3000`
+
+## 🧑‍💻 Autor
 
 Desenvolvido por Leunam Sousa de Jesus
 
 [LinkedIn](https://www.linkedin.com/in/leunam/)
+
+## 📝 Licença
+
+ReservaFácil by Inteli, Rafael Ryu Tati Nakahara is licensed under Creative Commons Attribution 4.0 International
