@@ -1,36 +1,70 @@
-# Teste da rota GET /users
-GET http://localhost:3000/users
+# Teste da rota GET /address
+GET http://localhost:3000/api/address
 Accept: application/json
 
 ###
 
-# Teste da rota GET /users/:id
-GET http://localhost:3000/users/39602f41-b43e-4fa8-b7f7-34c7a516740b
+# Teste da rota GET /address/:id
+GET http://localhost:3000/api/address/3
 Accept: application/json
+
+###
+
+# Teste da rota POST /address
+POST http://localhost:3000/api/address
+Content-Type: application/json
+
+{
+  "street": "Rua MMDC",
+  "number": "123",
+  "district": "Butantã",
+  "cep": "05424-000"
+}
+
+###
+
+# Teste da rota POST /events
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "name": "Eventos teste First",
+  "user_id": 1,
+  "address_id": 4,
+  "event_time": "16:00",
+  "event_date": "2025-06-24",
+  "description": "Esse será um evento realizado na Rua MMDC"
+}
 
 ###
 
 # Teste da rota POST /users
-POST http://localhost:3000/users
+POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "nome": "John Doe",
-  "email": "john@example.com"
+  "name": "Amanda",
+  "email": "teste@teste.com",
+  "password": "teste123",
+  "role": "organizador"
 }
+
 
 ###
 
-# Teste da rota PUT /users/:id
-PUT http://localhost:3000/users/39602f41-b43e-4fa8-b7f7-34c7a516740b
-Content-Type: application/jso
+# Teste da rota PUT /address/:id
+PUT http://localhost:3000/api/address/2
+Content-Type: application/json
+
 {
-  "nome": "Jane Doe",
-  "email": "jane@example.com"
+  "street": "Rua MMDC",
+  "number": "80",
+  "district": "Butantã",
+  "cep": "05424-000"
 }
 
 ###
 
-# Teste da rota DELETE /users/:id
-DELETE http://localhost:3000/users/39602f41-b43e-4fa8-b7f7-34c7a516740b
+# Teste da rota DELETE /address/:id
+DELETE http://localhost:3000/api/address/3
 Accept: application/json

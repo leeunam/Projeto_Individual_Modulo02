@@ -1,6 +1,8 @@
-# 📅 Plataforma de Eventos - Projeto Individual
+# Plataforma de Eventos - Projeto Individual
 
-Este repositório contém o projeto de uma **plataforma de eventos com gerenciamento de inscrições**, desenvolvido como parte do Módulo 2 da formação. O sistema permite cadastrar eventos, listar participantes e realizar inscrições de forma simples e eficiente.
+Este repositório contém o projeto de uma **plataforma de eventos com gerenciamento de inscrições**, desenvolvido durante o Módulo 2 do 1° ano de Inteli. 
+
+O sistema permite cadastrar eventos e realizar inscrições de forma simples e eficiente.
 
 ---
 
@@ -9,32 +11,23 @@ Este repositório contém o projeto de uma **plataforma de eventos com gerenciam
 projeto-eventos/
 │
 ├── config/ # Configuração do banco de dados
-│ └── database.js
+│ └── db.js
 ├── controllers/ # Lógica de controle de dados
-│ └── eventoController.js
-├── models/ # Modelos do banco (query builders)
-│ └── Evento.js
+│ └── eventController.js
+├── models/ # Modelos do banco 
+│ └── eventModels.js
 ├── routes/ # Rotas da aplicação
-│ └── index.js
-├── views/ # Páginas renderizadas com EJS
-│ └── pages/
-│ ├── home.ejs
-│ └── eventos.ejs
-├── public/ # Arquivos estáticos (CSS, JS, imagens)
-│ ├── css/
-│ │ └── style.css
-│ └── js/
-│ └── script.js
+│ └── eventRoute.js
 ├── .env.example # Variáveis de ambiente de exemplo
-├── .gitignore
-├── package.json
+├── .gitignore # Arquivos a serem ignorados no Github
+├── package.json ## Conjunto de dependências do projeto
 ├── server.js # Ponto de entrada da aplicação
-└── README.md
+└── README.md # Instrução e explicação do projeto
 ```
 
 ---
 
-## 💻 Como Executar o projeto localmente
+## Como Executar o projeto localmente
 
 ### 1. Utilize uma IDE (ex:Visual Studio Code)
 
@@ -42,7 +35,6 @@ projeto-eventos/
 
 ```bash
 git clone https://github.com/leeunam/Projeto_Individual_Modulo02
-cd projeto-eventos
 ```
 
 ### 3. Abra o terminal (ctrl + j) e instale as dependências com o código abaixo:
