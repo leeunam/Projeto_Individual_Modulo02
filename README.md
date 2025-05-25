@@ -84,4 +84,4 @@ Desenvolvido por Leunam Sousa de Jesus
 
 ## 📝 Licença
 
-ReservaFácil by Inteli, Rafael Ryu Tati Nakahara is licensed under Creative Commons Attribution 4.0 International
+Simples by Inteli, Leunam Sousa de Jesus is licensed under Creative Commons Attribution 4.0 International
