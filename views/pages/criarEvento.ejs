@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Simples - Criar Evento</title>
+  </head>
+  <body style="padding: 0; align-items: flex-start; background: #f9fafb">
+    <div class="page-container">
+      <div id="header-placeholder"></div>
+
+      <main class="main-content">
+        <div class="main-layout">
+          <div class="form-sections">
+            <section class="form-section create-form-left">
+              <div class="page-header">
+                <h1 class="form-title">Criar Evento</h1>
+              </div>
+
+              <% if (typeof error !== 'undefined' && error) { %>
+              <div
+                class="error-message"
+                style="
+                  background-color: #fee;
+                  color: #c33;
+                  padding: 10px;
+                  border-radius: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                <%= error %>
+              </div>
+              <% } %> <% if (typeof success !== 'undefined' && success) { %>
+              <div
+                class="success-message"
+                style="
+                  background-color: #efe;
+                  color: #363;
+                  padding: 10px;
+                  border-radius: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                <%= success %>
+              </div>
+              <% } %>
+
+              <!-- FORMULÁRIO COM CAMPOS CORRETOS -->
+              <form
+                class="form-container"
+                id="createEventForm"
+                method="POST"
+                action="/criarEvento"
+              >
+                <div class="input-group">
+                  <label for="eventName" class="input-label create-label"
+                    >Nome do Evento *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="eventName"
+                      name="eventName"
+                      type="text"
+                      placeholder="Ex: Conferência de Tecnologia"
+                      class="create-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="eventDate" class="input-label create-label"
+                    >Data *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="eventDate"
+                      name="eventDate"
+                      type="date"
+                      class="create-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="eventTime" class="input-label create-label"
+                    >Hora *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="eventTime"
+                      name="eventTime"
+                      type="time"
+                      class="create-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <!-- CAMPOS DE ENDEREÇO SEPARADOS -->
+                <div class="input-group">
+                  <label for="street" class="input-label create-label"
+                    >Rua *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="street"
+                      name="street"
+                      type="text"
+                      placeholder="Ex: Rua Augusta"
+                      class="create-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="number" class="input-label create-label"
+                    >Número *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="number"
+                      name="number"
+                      type="number"
+                      placeholder="Ex: 123"
+                      class="create-input"
+                      required
+                      min="1"
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="district" class="input-label create-label"
+                    >Bairro *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="district"
+                      name="district"
+                      type="text"
+                      placeholder="Ex: Consolação"
+                      class="create-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="cep" class="input-label create-label"
+                    >CEP *</label
+                  >
+                  <div class="input-box">
+                    <input
+                      id="cep"
+                      name="cep"
+                      type="text"
+                      placeholder="Ex: 01305-100"
+                      class="create-input"
+                      required
+                      maxlength="9"
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="eventDescription" class="input-label create-label"
+                    >Descrição *</label
+                  >
+                  <div class="input-box">
+                    <textarea
+                      id="eventDescription"
+                      name="eventDescription"
+                      placeholder="Descreva seu evento..."
+                      class="create-textarea"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+
+                <button type="submit" class="create-event-btn" id="submitBtn">
+                  Criar Evento
+                </button>
+              </form>
+            </section>
+
+            <section class="form-section create-form-right">
+              <div class="image-upload-container">
+                <button type="button" class="image-upload" id="imageUploadBtn">
+                  <div class="upload-content">
+                    <div class="upload-icon">📷</div>
+                    <span class="upload-text">Anexe uma imagem de capa</span>
+                    <p class="upload-subtitle">
+                      Clique para selecionar uma imagem
+                    </p>
+                  </div>
+                </button>
+                <input
+                  type="file"
+                  id="imageInput"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../scripts.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        setupFormValidation();
+      });
+
+      function setupFormValidation() {
+        const form = document.getElementById('createEventForm');
+
+        if (!form) {
+          console.error('Formulário não encontrado!');
+          return;
+        }
+
+        form.addEventListener('submit', function (event) {
+          const submitBtn = document.getElementById('submitBtn');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Criando evento...';
+        });
+      }
+    </script>
+  </body>
+</html>

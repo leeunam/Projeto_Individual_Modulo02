@@ -28,7 +28,10 @@ class Address {
   }
 
   static async delete(id) {
-    const result = await db.query('DELETE FROM address WHERE id = $1 RETURNING *', [id]);
+    const result = await db.query(
+      'DELETE FROM address WHERE id = $1 RETURNING *',
+      [id]
+    );
     return result.rowCount > 0;
   }
 }

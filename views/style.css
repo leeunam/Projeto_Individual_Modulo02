@@ -67,6 +67,12 @@ main.container h1 {
   border-color: #6c5ce7;
 }
 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .input-box {
   display: flex;
   flex-direction: column;

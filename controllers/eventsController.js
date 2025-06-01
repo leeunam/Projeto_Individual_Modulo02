@@ -2,10 +2,11 @@ const eventsModel = require('../models/eventsModel');
 
 const getAllEvents = async (req, res) => {
   try {
-    const events = await eventsModel.getAll();
-    res.status(200).json(events);
+    const events = await eventsModel.getAllWithDetails();
+    res.render('pages/eventos', { events });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Erro ao carregar eventos:', error);
+    res.render('pages/eventos', { events: [] });
   }
 };
 
@@ -24,8 +25,16 @@ const getEventsById = async (req, res) => {
 
 const createEvents = async (req, res) => {
   try {
-    const { name, user_id, address_id, event_time, event_date, description } = req.body;
-    const newEvents = await eventsModel.create({name, user_id, address_id, event_time, event_date, description});
+    const { name, user_id, address_id, event_time, event_date, description } =
+      req.body;
+    const newEvents = await eventsModel.create({
+      name,
+      user_id,
+      address_id,
+      event_time,
+      event_date,
+      description,
+    });
     res.render('events.ejs', { events });
     res.status(201).json(newEvents);
   } catch (error) {
@@ -35,8 +44,16 @@ const createEvents = async (req, res) => {
 
 const updateEvents = async (req, res) => {
   try {
-    const { name, user_id, address_id, event_time, event_date, description } = req.body;
-    const updatedEvents = await eventsModel.update(req.params.id, {name, user_id, address_id, event_time, event_date, description});
+    const { name, user_id, address_id, event_time, event_date, description } =
+      req.body;
+    const updatedEvents = await eventsModel.update(req.params.id, {
+      name,
+      user_id,
+      address_id,
+      event_time,
+      event_date,
+      description,
+    });
     if (updatedEvents) {
       res.status(200).json(updatedEvents);
     } else {
@@ -65,5 +82,5 @@ module.exports = {
   getEventsById,
   createEvents,
   updateEvents,
-  deleteEvents
+  deleteEvents,
 };

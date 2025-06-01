@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Simples - Cadastro</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Cadastre-se Agora!</h1>
+
+      <% if (error) { %>
+      <div
+        class="error-message"
+        style="
+          background-color: #fee;
+          color: #c33;
+          padding: 10px;
+          border-radius: 5px;
+          margin-bottom: 15px;
+        "
+      >
+        <%= error %>
+      </div>
+      <% } %> <% if (success) { %>
+      <div
+        class="success-message"
+        style="
+          background-color: #efe;
+          color: #363;
+          padding: 10px;
+          border-radius: 5px;
+          margin-bottom: 15px;
+        "
+      >
+        <%= success %>
+      </div>
+      <% } %>
+
+      <form method="POST" action="/register">
+        <div class="input-box">
+          <p>Nome</p>
+          <input
+            placeholder="Digite seu nome"
+            type="text"
+            name="name"
+            required
+          />
+        </div>
+
+        <div class="input-box">
+          <p>E-mail</p>
+          <input
+            placeholder="email@exemplo.com"
+            type="email"
+            name="email"
+            required
+          />
+        </div>
+
+        <div class="input-box">
+          <p>Senha</p>
+          <input
+            placeholder="Crie uma senha"
+            type="password"
+            name="password"
+            required
+          />
+        </div>
+
+        <div class="input-box">
+          <p>Tipo de Usuário</p>
+          <div class="selection">
+            <select name="role" required>
+              <option value="" disabled selected hidden>
+                Escolha entre Organizador ou Participante
+              </option>
+              <option value="organizador">Organizador</option>
+              <option value="participante">Participante</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="login">Cadastrar</button>
+
+        <div class="register">
+          <p>Já tem uma conta? <a href="/login">Faça o Login</a></p>
+        </div>
+      </form>
+    </main>
+
+    <script src="../scripts.js"></script>
+  </body>
+</html>

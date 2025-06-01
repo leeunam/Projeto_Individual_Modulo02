@@ -28,8 +28,22 @@ class Users {
   }
 
   static async delete(id) {
-    const result = await db.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
+    const result = await db.query(
+      'DELETE FROM users WHERE id = $1 RETURNING *',
+      [id]
+    );
     return result.rowCount > 0;
+  }
+
+  static async findByEmail(email) {
+    try {
+      const result = await db.query('SELECT * FROM users WHERE email = $1', [
+        email,
+      ]);
+      return result.rows[0]; // Retorna o primeiro usuário encontrado ou undefined
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
