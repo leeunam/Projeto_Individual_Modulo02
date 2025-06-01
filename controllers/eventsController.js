@@ -26,6 +26,7 @@ const createEvents = async (req, res) => {
   try {
     const { name, user_id, address_id, event_time, event_date, description } = req.body;
     const newEvents = await eventsModel.create({name, user_id, address_id, event_time, event_date, description});
+    res.render('events.ejs', { events });
     res.status(201).json(newEvents);
   } catch (error) {
     res.status(500).json({ error: error.message });

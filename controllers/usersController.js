@@ -25,8 +25,9 @@ const getUsersById = async (req, res) => {
 const createUsers = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    const newUsers = await usersModel.create({name, email, password, role});
+    const newUsers = await usersModel.create({ name, email, password, role });
     res.status(201).json(newUsers);
+    res.render('registrar.ejs', { newUsers });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -35,7 +36,12 @@ const createUsers = async (req, res) => {
 const updateUsers = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    const updatedUsers = await usersModel.update(req.params.id, {name, email, password, role});
+    const updatedUsers = await usersModel.update(req.params.id, {
+      name,
+      email,
+      password,
+      role,
+    });
     if (updatedUsers) {
       res.status(200).json(updatedUsers);
     } else {
@@ -64,5 +70,5 @@ module.exports = {
   getUsersById,
   createUsers,
   updateUsers,
-  deleteUsers
+  deleteUsers,
 };
