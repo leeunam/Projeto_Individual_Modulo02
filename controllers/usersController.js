@@ -30,8 +30,6 @@ const processLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log('Tentativa de login:', { email });
-
     const user = await usersModel.findByEmail(email);
 
     if (!user) {
@@ -47,10 +45,15 @@ const processLogin = async (req, res) => {
       });
     }
 
-    console.log('Login bem-sucedido para:', email);
+    req.session.user = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
     res.redirect('/eventos');
   } catch (error) {
-    console.error('Erro no login:', error);
     res.render('pages/login', {
       error: 'Erro interno do servidor. Tente novamente.',
     });
@@ -83,21 +86,22 @@ const processRegister = async (req, res) => {
 
     const existingUser = await usersModel.findByEmail(email);
     if (existingUser) {
-      console.log('Email já existe:', email);
       return res.render('pages/registrar', {
         error: 'Este email já está cadastrado. Use outro email ou faça login.',
         success: null,
       });
     }
 
-    console.log('Criando novo usuário...');
     const newUser = await usersModel.create({ name, email, password, role });
-    console.log('Usuário criado com sucesso:', newUser.id);
+    req.session.user = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+    };
 
-    console.log('Redirecionando para /eventos...');
     res.redirect('/eventos');
   } catch (error) {
-    console.error('Erro ao criar usuário:', error);
     res.render('pages/registrar', {
       error:
         'Erro ao criar usuário. Tente novamente. Detalhes: ' + error.message,
@@ -148,6 +152,23 @@ const deleteUsers = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Erro ao fazer logout:', err);
+      return res.status(500).json({ error: 'Erro ao fazer logout' });
+    }
+    res.redirect('/login');
+  });
+};
+
+const requireAuth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
 module.exports = {
   getAllUsers,
   getUsersById,
@@ -158,4 +179,6 @@ module.exports = {
   showLogin,
   processLogin,
   processRegister,
+  logout,
+  requireAuth,
 };

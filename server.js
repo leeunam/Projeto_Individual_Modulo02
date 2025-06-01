@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const session = require('express-session');
 const Addressroutes = require('./routes/addressRoutes');
 const Eventsroutes = require('./routes/eventsRoutes');
 const Usersroutes = require('./routes/usersRoutes');
+const addressController = require('./controllers/addressController');
 const eventsController = require('./controllers/eventsController');
 
 const app = express();
@@ -17,13 +19,27 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(
+  session({
+    secret: 'sua-chave-secreta-aqui', // Em produção, use uma chave secreta forte
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // true apenas em HTTPS
+      maxAge: 24 * 60 * 60 * 1000, // 24 horas
+    },
+  })
+);
+
 app.use(express.static(path.join(__dirname, 'views')));
 
-// Middleware de debug
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   if (req.method === 'POST') {
     console.log('Body:', req.body);
+  }
+  if (req.session && req.session.user) {
+  } else {
   }
   next();
 });
@@ -33,10 +49,11 @@ app.use('/api', Eventsroutes);
 app.use('/api', Usersroutes);
 app.use('/', Usersroutes);
 
-// Rotas para páginas
 app.get('/eventos', eventsController.getAllEvents);
-app.get('/criarEvento', eventsController.showCreateEvent);
-app.post('/criarEvento', eventsController.processCreateEvent);
+app.get('/criarEvento', eventsController.showCreateEventPage);
+app.post('/criarEvento', eventsController.createEvents);
+app.get('/adicionarEndereco', addressController.showAddressForm);
+app.get('/gerenciar', eventsController.updateEvents);
 
 app.get('/', (req, res) => {
   res.render('pages/home');

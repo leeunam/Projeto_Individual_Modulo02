@@ -11,12 +11,16 @@
     "init-db": "node scripts/runSQL.js"
   },
   "dependencies": {
+    "axios": "^1.9.0",
+    "axios-cookiejar-support": "^6.0.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "method-override": "^3.0.0",
-    "pg": "^8.16.0"
+    "pg": "^8.16.0",
+    "tough-cookie": "^5.1.2"
   },
   "devDependencies": {
     "jest": "^27.0.6",

@@ -50,21 +50,15 @@
               </div>
               <% } %>
 
-              <!-- FORMULÁRIO COM CAMPOS CORRETOS -->
-              <form
-                class="form-container"
-                id="createEventForm"
-                method="POST"
-                action="/criarEvento"
-              >
+              <form class="form-container" method="POST" action="/api/events">
                 <div class="input-group">
-                  <label for="eventName" class="input-label create-label"
+                  <label for="name" class="input-label create-label"
                     >Nome do Evento *</label
                   >
                   <div class="input-box">
                     <input
-                      id="eventName"
-                      name="eventName"
+                      id="name"
+                      name="name"
                       type="text"
                       placeholder="Ex: Conferência de Tecnologia"
                       class="create-input"
@@ -74,13 +68,13 @@
                 </div>
 
                 <div class="input-group">
-                  <label for="eventDate" class="input-label create-label"
+                  <label for="event_date" class="input-label create-label"
                     >Data *</label
                   >
                   <div class="input-box">
                     <input
-                      id="eventDate"
-                      name="eventDate"
+                      id="event_date"
+                      name="event_date"
                       type="date"
                       class="create-input"
                       required
@@ -89,13 +83,13 @@
                 </div>
 
                 <div class="input-group">
-                  <label for="eventTime" class="input-label create-label"
+                  <label for="event_time" class="input-label create-label"
                     >Hora *</label
                   >
                   <div class="input-box">
                     <input
-                      id="eventTime"
-                      name="eventTime"
+                      id="event_time"
+                      name="event_time"
                       type="time"
                       class="create-input"
                       required
@@ -103,81 +97,106 @@
                   </div>
                 </div>
 
-                <!-- CAMPOS DE ENDEREÇO SEPARADOS -->
                 <div class="input-group">
-                  <label for="street" class="input-label create-label"
-                    >Rua *</label
+                  <label class="input-label create-label"
+                    >Localização do Evento *</label
                   >
-                  <div class="input-box">
-                    <input
-                      id="street"
-                      name="street"
-                      type="text"
-                      placeholder="Ex: Rua Augusta"
-                      class="create-input"
-                      required
-                    />
+
+                  <% if (typeof selectedAddress !== 'undefined' &&
+                  selectedAddress) { %>
+                  <div
+                    class="address-selected"
+                    style="
+                      background: #f0f9ff;
+                      border: 2px solid #0ea5e9;
+                      border-radius: 8px;
+                      padding: 15px;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                      "
+                    >
+                      <div>
+                        <p style="margin: 0; font-weight: 500; color: #0369a1">
+                          📍 <%= selectedAddress.street %>, <%=
+                          selectedAddress.number %>
+                        </p>
+                        <p
+                          style="
+                            margin: 5px 0 0 0;
+                            color: #64748b;
+                            font-size: 14px;
+                          "
+                        >
+                          <%= selectedAddress.district %> - CEP: <%=
+                          selectedAddress.cep %>
+                        </p>
+                      </div>
+                      <a
+                        href="/adicionarEndereco"
+                        style="
+                          background: #0ea5e9;
+                          color: white;
+                          padding: 8px 12px;
+                          border-radius: 6px;
+                          text-decoration: none;
+                          font-size: 14px;
+                        "
+                      >
+                        Alterar
+                      </a>
+                    </div>
                   </div>
+                  <input
+                    type="hidden"
+                    name="address_id"
+                    value="<%= selectedAddress.id %>"
+                  />
+                  <% } else { %>
+                  <div
+                    class="address-placeholder"
+                    style="
+                      border: 2px dashed #d1d5db;
+                      border-radius: 8px;
+                      padding: 30px;
+                      text-align: center;
+                      background: #f9fafb;
+                    "
+                  >
+                    <p style="margin: 0; color: #6b7280; margin-bottom: 15px">
+                      Nenhum endereço adicionado
+                    </p>
+                    <a
+                      href="/adicionarEndereco"
+                      class="create-event-btn"
+                      style="
+                        display: inline-block;
+                        background: #0ea5e9;
+                        color: white;
+                        padding: 12px 24px;
+                        border-radius: 6px;
+                        text-decoration: none;
+                      "
+                    >
+                      + Adicionar Localização
+                    </a>
+                  </div>
+                  <% } %>
                 </div>
 
                 <div class="input-group">
-                  <label for="number" class="input-label create-label"
-                    >Número *</label
-                  >
-                  <div class="input-box">
-                    <input
-                      id="number"
-                      name="number"
-                      type="number"
-                      placeholder="Ex: 123"
-                      class="create-input"
-                      required
-                      min="1"
-                    />
-                  </div>
-                </div>
-
-                <div class="input-group">
-                  <label for="district" class="input-label create-label"
-                    >Bairro *</label
-                  >
-                  <div class="input-box">
-                    <input
-                      id="district"
-                      name="district"
-                      type="text"
-                      placeholder="Ex: Consolação"
-                      class="create-input"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="input-group">
-                  <label for="cep" class="input-label create-label"
-                    >CEP *</label
-                  >
-                  <div class="input-box">
-                    <input
-                      id="cep"
-                      name="cep"
-                      type="text"
-                      placeholder="Ex: 01305-100"
-                      class="create-input"
-                      required
-                      maxlength="9"
-                    />
-                  </div>
-                </div>
-
-                <div class="input-group">
-                  <label for="eventDescription" class="input-label create-label"
+                  <label for="description" class="input-label create-label"
                     >Descrição *</label
                   >
                   <div class="input-box">
                     <textarea
-                      id="eventDescription"
-                      name="eventDescription"
+                      id="description"
+                      name="description"
                       placeholder="Descreva seu evento..."
                       class="create-textarea"
                       required
