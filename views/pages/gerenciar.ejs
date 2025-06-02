@@ -138,10 +138,14 @@
         <div class="modal-body">
           <div class="modal-event-name" id="eventNameDisplay"></div>
           <div class="modal-warning">
-            ⚠️ Esta ação não pode ser desfeita. Todos os dados do evento serão perdidos permanentemente.
+            ⚠️ Esta ação não pode ser desfeita. Todos os dados do evento serão
+            perdidos permanentemente.
           </div>
           <div class="modal-actions">
-            <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">
+            <button
+              class="modal-btn modal-btn-cancel"
+              onclick="closeDeleteModal()"
+            >
               Cancelar
             </button>
             <button class="modal-btn modal-btn-delete" id="confirmDeleteBtn">
@@ -167,14 +171,14 @@
       function deleteEvent(eventId, eventName) {
         currentEventId = eventId;
         currentEventName = eventName;
-        
+
         // Atualizar o conteúdo do modal
         document.getElementById('eventNameDisplay').textContent = eventName;
-        
+
         // Mostrar o modal
         const modal = document.getElementById('deleteModal');
         modal.classList.add('active');
-        
+
         // Configurar o botão de confirmação
         const confirmBtn = document.getElementById('confirmDeleteBtn');
         confirmBtn.onclick = confirmDeleteEvent;
@@ -191,7 +195,7 @@
       // Função para confirmar a exclusão
       async function confirmDeleteEvent() {
         const confirmBtn = document.getElementById('confirmDeleteBtn');
-        
+
         // Adicionar estado de loading
         confirmBtn.disabled = true;
         confirmBtn.classList.add('loading');
@@ -210,10 +214,10 @@
           if (response.ok) {
             // Sucesso - mostrar mensagem e recarregar a página
             closeDeleteModal();
-            
+
             // Mostrar mensagem de sucesso temporária
             showSuccessMessage('Evento excluído com sucesso!');
-            
+
             // Recarregar após um delay para mostrar a mensagem
             setTimeout(() => {
               window.location.reload();
@@ -297,14 +301,16 @@
       }
 
       // Fechar modal ao clicar no overlay
-      document.getElementById('deleteModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeDeleteModal();
-        }
-      });
+      document
+        .getElementById('deleteModal')
+        .addEventListener('click', function (e) {
+          if (e.target === this) {
+            closeDeleteModal();
+          }
+        });
 
       // Fechar modal com tecla ESC
-      document.addEventListener('keydown', function(e) {
+      document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
           closeDeleteModal();
         }

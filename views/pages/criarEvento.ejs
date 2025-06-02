@@ -79,6 +79,9 @@
                       class="create-input"
                       required
                     />
+                    <span class="input-helper" id="dateHelper"
+                      >Selecione uma data futura</span
+                    >
                   </div>
                 </div>
 
@@ -94,6 +97,29 @@
                       class="create-input"
                       required
                     />
+                    <div class="time-suggestions" id="timeSuggestions">
+                      <button
+                        type="button"
+                        class="time-suggestion"
+                        data-time="09:00"
+                      >
+                        09:00
+                      </button>
+                      <button
+                        type="button"
+                        class="time-suggestion"
+                        data-time="14:00"
+                      >
+                        14:00
+                      </button>
+                      <button
+                        type="button"
+                        class="time-suggestion"
+                        data-time="19:00"
+                      >
+                        19:00
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -193,15 +219,22 @@
                   <label for="description" class="input-label create-label"
                     >Descrição *</label
                   >
-                  <div class="input-box">
+                  <div class="textarea-container">
                     <textarea
                       id="description"
                       name="description"
-                      placeholder="Descreva seu evento..."
+                      placeholder="Descreva seu evento, com informações como programação, público-alvo, objetivos e qualquer detalhe relevante."
                       class="create-textarea"
+                      maxlength="1000"
                       required
                     ></textarea>
+                    <div class="char-counter">
+                      <span id="charCount">0</span>/1000 caracteres
+                    </div>
                   </div>
+                  <span class="input-helper"
+                    >Forneça uma descrição clara e atrativa do seu evento</span
+                  >
                 </div>
 
                 <button type="submit" class="create-event-btn" id="submitBtn">
@@ -238,10 +271,13 @@
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         setupFormValidation();
+        setupTextareaFeatures();
+        setupDateTimeFeatures();
       });
 
       function setupFormValidation() {
-        const form = document.getElementById('createEventForm');
+        const form = document.querySelector('form');
+        const submitBtn = document.getElementById('submitBtn');
 
         if (!form) {
           console.error('Formulário não encontrado!');
@@ -249,9 +285,103 @@
         }
 
         form.addEventListener('submit', function (event) {
-          const submitBtn = document.getElementById('submitBtn');
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Criando evento...';
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Criando evento...';
+          }
+        });
+      }
+
+      function setupTextareaFeatures() {
+        const textarea = document.getElementById('description');
+        const charCount = document.getElementById('charCount');
+
+        if (!textarea || !charCount) return;
+
+        // Auto-resize functionality
+        function autoResize() {
+          textarea.style.height = 'auto';
+          textarea.style.height = Math.min(textarea.scrollHeight, 300) + 'px';
+        }
+
+        // Character counter
+        function updateCharCount() {
+          const length = textarea.value.length;
+          charCount.textContent = length;
+
+          const counter = charCount.parentElement;
+          counter.classList.remove('warning', 'error');
+
+          if (length > 900) {
+            counter.classList.add('error');
+          } else if (length > 750) {
+            counter.classList.add('warning');
+          }
+        }
+
+        textarea.addEventListener('input', function () {
+          autoResize();
+          updateCharCount();
+        });
+
+        textarea.addEventListener('focus', autoResize);
+
+        // Initial setup
+        autoResize();
+        updateCharCount();
+      }
+
+      function setupDateTimeFeatures() {
+        const dateInput = document.getElementById('event_date');
+        const timeInput = document.getElementById('event_time');
+        const dateHelper = document.getElementById('dateHelper');
+        const timeSuggestions = document.querySelectorAll('.time-suggestion');
+
+        if (!dateInput || !timeInput) return;
+
+        // Set minimum date to today
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        dateInput.min = tomorrow.toISOString().split('T')[0];
+
+        // Date validation
+        dateInput.addEventListener('change', function () {
+          const selectedDate = new Date(this.value);
+          const minDate = new Date(tomorrow);
+
+          if (selectedDate < minDate) {
+            dateHelper.textContent = 'Por favor, selecione uma data futura';
+            dateHelper.classList.add('error');
+            this.setCustomValidity('Data deve ser futura');
+          } else {
+            dateHelper.textContent = 'Data válida selecionada';
+            dateHelper.classList.remove('error');
+            this.setCustomValidity('');
+          }
+        });
+
+        // Time suggestions
+        timeSuggestions.forEach((button) => {
+          button.addEventListener('click', function () {
+            const time = this.getAttribute('data-time');
+            timeInput.value = time;
+
+            // Remove active class from all suggestions
+            timeSuggestions.forEach((btn) => btn.classList.remove('active'));
+            // Add active class to clicked suggestion
+            this.classList.add('active');
+          });
+        });
+
+        // Highlight matching time suggestion
+        timeInput.addEventListener('change', function () {
+          timeSuggestions.forEach((btn) => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-time') === this.value) {
+              btn.classList.add('active');
+            }
+          });
         });
       }
     </script>
