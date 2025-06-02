@@ -31,7 +31,13 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, 'views')));
+// Middleware para arquivos estáticos específicos
+app.use('/style.css', express.static(path.join(__dirname, 'views/style.css')));
+app.use('/scripts.js', express.static(path.join(__dirname, 'views/scripts.js')));
+
+// Middleware para servir outros arquivos estáticos das pastas específicas
+app.use('/pages', express.static(path.join(__dirname, 'views/pages')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);

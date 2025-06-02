@@ -188,6 +188,12 @@ const showEditEventPage = async (req, res) => {
     }
 
     const eventId = req.params.id;
+    
+    // Validar se o ID é um número válido
+    if (!eventId || isNaN(parseInt(eventId)) || !Number.isInteger(Number(eventId))) {
+      return res.redirect('/gerenciar?error=ID de evento inválido');
+    }
+
     const event = await eventsModel.getByIdWithDetails(eventId);
 
     if (!event) {
@@ -222,6 +228,11 @@ const processEditEvent = async (req, res) => {
     }
 
     const eventId = req.params.id;
+    
+    // Validar se o ID é um número válido
+    if (!eventId || isNaN(parseInt(eventId)) || !Number.isInteger(Number(eventId))) {
+      return res.redirect('/gerenciar?error=ID de evento inválido');
+    }
     const {
       name,
       event_date,
@@ -327,6 +338,12 @@ const deleteEvents = async (req, res) => {
 const showEventDetails = async (req, res) => {
   try {
     const eventId = req.params.id;
+    
+    // Validar se o ID é um número válido
+    if (!eventId || isNaN(parseInt(eventId)) || !Number.isInteger(Number(eventId))) {
+      return res.redirect('/eventos?error=ID de evento inválido');
+    }
+
     const event = await eventsModel.getByIdWithDetails(eventId);
 
     if (!event) {
