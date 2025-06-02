@@ -6,11 +6,11 @@
 
 ## Sumário
 
-1. [Introdução](#c1)  
-2. [Visão Geral da Aplicação Web](#c2)  
-3. [Projeto Técnico da Aplicação Web](#c3)  
-4. [Desenvolvimento da Aplicação Web](#c4)  
-5. [Referências](#c5)  
+1. [Introdução](#c1)
+2. [Visão Geral da Aplicação Web](#c2)
+3. [Projeto Técnico da Aplicação Web](#c3)
+4. [Desenvolvimento da Aplicação Web](#c4)
+5. [Referências](#c5)
 
 <br>
 
@@ -31,16 +31,16 @@ Todo o projeto será desenvolvido com foco em **clareza** e **simplicidade**, co
 
 ### 2.2. User Stories
 
-| User Stories | Requisitos | Critérios de Aceite |
-|-|-|-|
-| US01 | **Como** organizador de eventos, **quero** criar eventos e cadastrar informações (nome, data, local, hora e descrição), **para que** os participantes possam visualizar e se inscrever com facilidade. | - Deve ser possível criar um evento preenchendo nome, data, local e descrição. <br> - O evento deve aparecer na lista de eventos disponíveis para os usuários.<br>- O sistema deve validar se todos os campos obrigatórios foram preenchidos. |
-| US02 | **Como** participante, **quero** visualizar e me inscrever em eventos, **para que** eu possa participar das atividades de interesse. | - Deve ser possível visualizar todos os eventos disponíveis.<br>- Deve ser possível realizar a inscrição em um evento com sucesso.<br> - A inscrição deve ser confirmada e armazenada no sistema. |
-| US03 | **Como** participante, **quero** receber uma confirmação da inscrição **para que** eu saiba que estou participando do evento. | - Após a inscrição, deve ser possível visualizar uma confirmação.<br>- O status de "se inscrever" deve mudar para "inscrito".<br>|
+| User Stories | Requisitos                                                                                                                                                                                             | Critérios de Aceite                                                                                                                                                                                                                           |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| US01         | **Como** organizador de eventos, **quero** criar eventos e cadastrar informações (nome, data, local, hora e descrição), **para que** os participantes possam visualizar e se inscrever com facilidade. | - Deve ser possível criar um evento preenchendo nome, data, local e descrição. <br> - O evento deve aparecer na lista de eventos disponíveis para os usuários.<br>- O sistema deve validar se todos os campos obrigatórios foram preenchidos. |
+| US02         | **Como** participante, **quero** visualizar e me inscrever em eventos, **para que** eu possa participar das atividades de interesse.                                                                   | - Deve ser possível visualizar todos os eventos disponíveis.<br>- Deve ser possível realizar a inscrição em um evento com sucesso.<br> - A inscrição deve ser confirmada e armazenada no sistema.                                             |
+| US03         | **Como** participante, **quero** receber uma confirmação da inscrição **para que** eu saiba que estou participando do evento.                                                                          | - Após a inscrição, deve ser possível visualizar uma confirmação.<br>- O status de "se inscrever" deve mudar para "inscrito".<br>                                                                                                             |
 
 ## Análise INVEST da User Story US01
 
 **User Story analisada:**  
-*US01 |  Como organizador de eventos, quero criar eventos e cadastrar informações (nome, data, local, descrição), para que os participantes possam visualizar e se inscrever com facilidade.*
+_US01 | Como organizador de eventos, quero criar eventos e cadastrar informações (nome, data, local, descrição), para que os participantes possam visualizar e se inscrever com facilidade._
 
 ### INVEST:
 
@@ -77,16 +77,19 @@ O banco de dados foi modelado e projetado em PostgreSQL para atender às princip
 ![Diagrama Lógico do Banco de Dados](../assets/bd.png)
 
 #### 3. Tabelas e Atributos
+
 **Usuários (`users`)**
+
 - `id`: Identificador único do usuário (PK)
 - `name`: Nome completo do usuário
 - `email`: E-mail único do usuário (usado para login)
 - `password`: Senha de acesso
-- `role`: Tipo do usuário na plataforma (`organizador` ou `participante`)  
+- `role`: Tipo do usuário na plataforma (`organizador` ou `participante`)
 
 ---
 
 ### **Endereços (`address`)**
+
 - `id`: Identificador único do endereço (PK)
 - `street`: Nome da rua
 - `number`: Número do local
@@ -96,6 +99,7 @@ O banco de dados foi modelado e projetado em PostgreSQL para atender às princip
 ---
 
 ### **Eventos (`events`)**
+
 - `id`: Identificador único do evento (PK)
 - `name`: Título do evento
 - `user_id`: FK para o usuário responsável pelo evento (organizador)
@@ -104,17 +108,17 @@ O banco de dados foi modelado e projetado em PostgreSQL para atender às princip
 - `event_date`: Data de realização do evento
 - `description`: Descrição detalhada do evento (opcional)
 
-
 #### 4. Cardinalidade das Relações
 
-- **Usuário → Eventos**: 1:N - Um usuário pode ser responsável por vários eventos.  
+- **Usuário → Eventos**: 1:N - Um usuário pode ser responsável por vários eventos.
 - **Endereço → Eventos**: 1:N - Um endereço pode estar vinculado a vários eventos.
 
 #### 5. Modelo Físico – Schema do Banco de Dados
 
 O arquivo abaixo contém todas as instruções SQL para a criação do banco de dados:
 
-**Arquivo .SQL com o schema:**  
+**Arquivo .SQL com o schema:**
+
 ```
 CREATE TABLE Users (
   id SERIAL PRIMARY KEY,
@@ -150,6 +154,7 @@ CREATE TABLE Events (
 O sistema implementa três models principais que refletem a estrutura do banco de dados PostgreSQL:
 
 1. **User Model**
+
    - Responsável pelo gerenciamento de usuários
    - Atributos: id, name, email, password, role
    - Métodos principais:
@@ -159,6 +164,7 @@ O sistema implementa três models principais que refletem a estrutura do banco d
      - `deleteUser`: Remove usuário do sistema
 
 2. **Event Model**
+
    - Gerencia os eventos da plataforma
    - Atributos: id, name, user_id, address_id, event_time, event_date, description
    - Métodos principais:
@@ -178,12 +184,14 @@ O sistema implementa três models principais que refletem a estrutura do banco d
      - `deleteAddress`: Remove endereço do sistema
 
 **Implementação do Banco de Dados:**
+
 - Utilização do PostgreSQL como SGBD
 - Conexão estabelecida através do Knex.js
 - Migrations implementadas para versionamento do banco
 - Dados iniciais de teste
 
 **Migrations Implementadas:**
+
 1. Criação da tabela de usuários
 2. Criação da tabela de endereços
 3. Criação da tabela de eventos
@@ -198,12 +206,14 @@ A aplicação segue a arquitetura MVC (Model-View-Controller), implementada da s
 **Fluxo de Dados na Arquitetura:**
 
 1. **Model:**
+
    - Implementa a lógica de negócios
    - Gerencia o acesso ao banco de dados PostgreSQL
    - Utiliza Knex.js para queries e migrations
    - Mantém a integridade dos dados
 
 2. **View:**
+
    - Interface do usuário em HTML/CSS/JavaScript
    - Renderização dinâmica de conteúdo
    - Formulários para interação com usuário
@@ -216,6 +226,7 @@ A aplicação segue a arquitetura MVC (Model-View-Controller), implementada da s
    - Coordena a comunicação entre Model e View
 
 **Componentes Adicionais:**
+
 - **Routes:** Gerenciamento de rotas da aplicação
 
 ### 3.3. Wireframes
@@ -223,25 +234,28 @@ A aplicação segue a arquitetura MVC (Model-View-Controller), implementada da s
 A seguir, apresento os wireframes das principais funcionalidades da plataforma, diretamente relacionados às User Stories (US) descritas anteriormente.
 
 #### Tela de Participante
+
 ![Tela participantes de Eventos](../assets/Participante.png)
 **Relação com US**:
 
 - **US02**: Como participante, quero visualizar e me inscrever em eventos.
 - A tela mostra as informações do evento de forma acessível, com opção de inscrição ou visualização.
 
-
 #### Tela de Criação de Evento:
 
 ![Tela Criação de Eventos](../assets/Criar.png)
 
 **Relação com US**:
+
 - **US01**: Como organizador de eventos, quero criar eventos e cadastrar informações (nome, data, local, hora e descrição)
 - Esta tela permite ao organizador inserir as informações principais do evento e estruturar sua programação.
 
 #### Tela de Confirmação de Inscrição
+
 ![Tela Confirmação de Inscrição](../assets/Confirmar.png)
 
 **Relação com US**:
+
 - **US02**: Como participante, quero receber uma confirmação da inscrição.
 - A interface permite acessar as informações do evento e acompanhar elas em tempo real.
 
@@ -285,18 +299,85 @@ A seguir, imagens do protótipo de alta fidelidade da solução, que refletem as
 **Tela de gerenciamento de eventos**
 ![Gerenciar Eventos](../assets/Gerenciar.png)
 
+> **Acesse o protótipo completo aqui:** > [Protótipo Figma – Projeto Individual](https://www.figma.com/design/Zhon5TjMIgSFq4zLD4IwnW/Projeto-Individual?node-id=3332-556&t=2dYIhfYo43IedMCw-1)
 
-> **Acesse o protótipo completo aqui:**
-> [Protótipo Figma – Projeto Individual](https://www.figma.com/design/Zhon5TjMIgSFq4zLD4IwnW/Projeto-Individual?node-id=3332-556&t=2dYIhfYo43IedMCw-1)
+### 3.6. WebAPI e endpoints
 
+O sistema de gerenciamento de eventos implementa uma API REST completa, organizada em três módulos principais: **Users**, **Events** e **Address**. A API oferece endpoints tanto para operações CRUD (Create, Read, Update, Delete) quanto para a interface web da aplicação.
 
-### 3.6. WebAPI e endpoints (Semana 05)
+#### Estrutura da API
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+A API está estruturada da seguinte forma:
+
+- **Base URL:** `http://localhost:3000`
+- **Endpoints de API:** Prefixo `/api` - Retornam dados em formato JSON
+- **Endpoints Web:** Sem prefixo - Renderizam páginas HTML com EJS
+
+#### Módulos Principais
+
+**1. Usuários (`/api/users`)**
+
+- Gerenciamento completo de usuários (organizadores e participantes)
+- Autenticação baseada em sessões
+- Endpoints para CRUD de usuários
+
+**2. Eventos (`/api/events`)**
+
+- Criação, listagem, edição e exclusão de eventos
+- Associação com usuários organizadores e endereços
+- Gerenciamento de inscrições
+
+**3. Endereços (`/api/address`)**
+
+- Cadastro e gerenciamento de locais dos eventos
+- Validação de dados de endereço (CEP, rua, número, bairro)
+
+#### Autenticação e Autorização
+
+O sistema utiliza **sessões do Express** para manter o estado de autenticação dos usuários. Após o login bem-sucedido, as informações do usuário são armazenadas na sessão e utilizadas para:
+
+- Autorizar operações em eventos (apenas organizadores podem editar/excluir seus próprios eventos)
+- Personalizar a experiência do usuário
+- Controlar acesso a páginas protegidas
+
+#### Principais Endpoints
+
+**Autenticação:**
+
+- `POST /login` - Autenticação de usuário
+- `POST /register` - Cadastro de novo usuário
+
+**Gestão de Eventos:**
+
+- `GET /eventos` - Listagem pública de eventos
+- `POST /criarEvento` - Criação de novo evento
+- `GET /evento/:id/editar` - Edição de evento
+- `POST /evento/:id/inscrever` - Inscrição em evento
+
+**API REST:**
+
+- `GET /api/events` - Lista eventos (JSON)
+- `POST /api/events` - Cria evento (JSON)
+- `PUT /api/events/:id` - Atualiza evento (JSON)
+- `DELETE /api/events/:id` - Remove evento (JSON)
+
+#### Documentação Completa
+
+Para uma descrição detalhada de todos os endpoints, incluindo parâmetros, exemplos de requisições e respostas, códigos de status HTTP e casos de uso, consulte:
+
+**[Documentação Completa de Endpoints](./endpoints.md)**
+
+A documentação inclui:
+
+- Descrição detalhada de cada endpoint
+- Exemplos de requisições e respostas JSON
+- Códigos de status HTTP
+- Exemplos práticos com cURL
+- Notas técnicas sobre implementação
 
 ### 3.7 Interface e Navegação (Semana 07)
 
-*Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+_Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar._
 
 ---
 
@@ -304,19 +385,18 @@ A seguir, imagens do protótipo de alta fidelidade da solução, que refletem as
 
 ### 4.1 Demonstração do Sistema Web (Semana 8)
 
-*VIDEO: Insira o link do vídeo demonstrativo nesta seção*
-*Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+_VIDEO: Insira o link do vídeo demonstrativo nesta seção_
+_Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar._
 
 ### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
 
-*Indique pontos fortes e pontos a melhorar de maneira geral.*
-*Relacione também quaisquer outras ideias que você tenha para melhorias futuras.*
-
-
+_Indique pontos fortes e pontos a melhorar de maneira geral._
+_Relacione também quaisquer outras ideias que você tenha para melhorias futuras._
 
 ## <a name="c5"></a>5. Referências
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
 ---
+
 ---
