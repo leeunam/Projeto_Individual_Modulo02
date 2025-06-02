@@ -27,11 +27,14 @@
               <div
                 class="error-message"
                 style="
-                  background-color: #fee;
-                  color: #c33;
-                  padding: 10px;
-                  border-radius: 5px;
-                  margin-bottom: 15px;
+                  background-color: #fef2f2;
+                  color: #dc2626;
+                  padding: 12px 16px;
+                  border-radius: 8px;
+                  margin-bottom: 20px;
+                  border: 1px solid #fecaca;
+                  font-size: 14px;
+                  font-weight: 500;
                 "
               >
                 <%= error %>
@@ -40,11 +43,14 @@
               <div
                 class="success-message"
                 style="
-                  background-color: #efe;
-                  color: #363;
-                  padding: 10px;
-                  border-radius: 5px;
-                  margin-bottom: 15px;
+                  background-color: #f0fdf4;
+                  color: #059669;
+                  padding: 12px 16px;
+                  border-radius: 8px;
+                  margin-bottom: 20px;
+                  border: 1px solid #bbf7d0;
+                  font-size: 14px;
+                  font-weight: 500;
                 "
               >
                 <%= success %>
@@ -110,75 +116,69 @@
                     >Localização do Evento *</label
                   >
 
-                  <div class="input-group">
-                    <label for="street" class="input-label create-label"
-                      >Rua *</label
+                  <div
+                    class="address-selected"
+                    style="
+                      background: #f0f9ff;
+                      border: 2px solid #0ea5e9;
+                      border-radius: 8px;
+                      padding: 15px;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                      "
                     >
-                    <div class="input-box">
-                      <input
-                        id="street"
-                        name="street"
-                        type="text"
-                        value="<%= event.street %>"
-                        placeholder="Ex: Rua Augusta"
-                        class="create-input"
-                        required
-                      />
+                      <div>
+                        <p style="margin: 0; font-weight: 500; color: #0369a1">
+                          📍 <%= event.street %>, <%= event.number %>
+                        </p>
+                        <p
+                          style="
+                            margin: 5px 0 0 0;
+                            color: #64748b;
+                            font-size: 14px;
+                          "
+                        >
+                          <%= event.district %> - CEP: <%= event.cep %>
+                        </p>
+                      </div>
+                      <span
+                        style="
+                          background: #f1f5f9;
+                          color: #475569;
+                          padding: 8px 12px;
+                          border-radius: 6px;
+                          font-size: 14px;
+                          border: 1px solid #e2e8f0;
+                        "
+                      >
+                        Endereço Atual
+                      </span>
                     </div>
                   </div>
 
-                  <div class="input-group">
-                    <label for="number" class="input-label create-label"
-                      >Número *</label
-                    >
-                    <div class="input-box">
-                      <input
-                        id="number"
-                        name="number"
-                        type="number"
-                        value="<%= event.number %>"
-                        placeholder="Ex: 123"
-                        class="create-input"
-                        required
-                        min="1"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="input-group">
-                    <label for="district" class="input-label create-label"
-                      >Bairro *</label
-                    >
-                    <div class="input-box">
-                      <input
-                        id="district"
-                        name="district"
-                        type="text"
-                        value="<%= event.district %>"
-                        placeholder="Ex: Consolação"
-                        class="create-input"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div class="input-group">
-                    <label for="cep" class="input-label create-label"
-                      >CEP *</label
-                    >
-                    <div class="input-box">
-                      <input
-                        id="cep"
-                        name="cep"
-                        type="text"
-                        value="<%= event.cep %>"
-                        placeholder="Ex: 01305-100"
-                        class="create-input"
-                        required
-                        maxlength="9"
-                      />
-                    </div>
-                  </div>
+                  <!-- Campos ocultos para manter compatibilidade com o backend -->
+                  <input
+                    type="hidden"
+                    name="street"
+                    value="<%= event.street %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="number"
+                    value="<%= event.number %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="district"
+                    value="<%= event.district %>"
+                  />
+                  <input type="hidden" name="cep" value="<%= event.cep %>" />
                 </div>
 
                 <div class="input-group">
@@ -198,11 +198,8 @@
                   </div>
                 </div>
 
-                <div
-                  class="form-actions"
-                  style="display: flex; gap: 15px; margin-top: 20px"
-                >
-                  <button type="submit" class="create-event-btn">
+                <div class="form-actions" style="margin-top: 32px">
+                  <button type="submit" class="create-event-btn" id="submitBtn">
                     Salvar Alterações
                   </button>
                   <a
@@ -212,7 +209,10 @@
                       background: #6b7280;
                       text-decoration: none;
                       text-align: center;
-                      line-height: 40px;
+                      display: inline-flex;
+                      align-items: center;
+                      justify-content: center;
+                      margin-top: 12px;
                     "
                   >
                     Cancelar
@@ -223,12 +223,14 @@
 
             <section class="form-section create-form-right">
               <div class="image-upload-container">
-                <div class="upload-content">
-                  <div class="upload-icon">✏️</div>
-                  <span class="upload-text">Editar Evento</span>
-                  <p class="upload-subtitle">
-                    Altere as informações do seu evento
-                  </p>
+                <div class="image-upload">
+                  <div class="upload-content">
+                    <div class="upload-icon">✏️</div>
+                    <span class="upload-text">Editar Evento</span>
+                    <p class="upload-subtitle">
+                      Altere as informações do seu evento facilmente
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
@@ -238,5 +240,43 @@
     </div>
 
     <script src="../scripts.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        setupFormValidation();
+      });
+
+      function setupFormValidation() {
+        const form = document.querySelector('form');
+
+        if (!form) {
+          console.error('Formulário não encontrado!');
+          return;
+        }
+
+        form.addEventListener('submit', function (event) {
+          const submitBtn = document.getElementById('submitBtn');
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Salvando alterações...';
+            submitBtn.classList.add('loading');
+          }
+        });
+
+        // Validação de data
+        const dateInput = document.getElementById('event_date');
+        if (dateInput) {
+          dateInput.addEventListener('change', function () {
+            const selectedDate = new Date(this.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (selectedDate < today) {
+              alert('A data do evento não pode ser no passado.');
+              this.value = '';
+            }
+          });
+        }
+      }
+    </script>
   </body>
 </html>
