@@ -24,7 +24,36 @@
               </a>
             </div>
 
+            <% if (typeof success !== 'undefined' && success) { %>
+            <div
+              class="success-message"
+              style="
+                background-color: #efe;
+                color: #363;
+                padding: 10px;
+                border-radius: 5px;
+                margin-bottom: 15px;
+              "
+            >
+              <%= success %>
+            </div>
+            <% } %> <% if (typeof error !== 'undefined' && error) { %>
+            <div
+              class="error-message"
+              style="
+                background-color: #fee;
+                color: #c33;
+                padding: 10px;
+                border-radius: 5px;
+                margin-bottom: 15px;
+              "
+            >
+              <%= error %>
+            </div>
+            <% } %>
+
             <section class="table-container">
+              <% if (events && events.length > 0) { %>
               <div class="table">
                 <div class="table-header">
                   <div class="table-cell event-name-column">
@@ -34,183 +63,51 @@
                     <div class="table-header-cell">Data</div>
                   </div>
                   <div class="table-cell participants-column">
-                    <div class="table-header-cell">Participantes</div>
+                    <div class="table-header-cell">Localização</div>
                   </div>
                   <div class="table-cell actions-column">
                     <div class="table-header-cell actions-header">Ações</div>
                   </div>
                 </div>
 
+                <% events.forEach(event => { %>
                 <div class="table-row">
                   <div class="table-data-cell event-name-column">
-                    <div class="table-cell-text">Workshop de Fotografia</div>
+                    <div class="table-cell-text"><%= event.name %></div>
                   </div>
                   <div class="table-data-cell event-date-column">
-                    <a href="detalhesEventos.html" class="table-cell-link"
-                      >20 de Julho de 2024</a
-                    >
-                  </div>
-                  <div class="table-data-cell participants-column">
-                    <div class="table-cell-text">50</div>
-                  </div>
-                  <div class="table-data-cell actions-column">
-                    <div class="action-buttons">
-                      <button
-                        class="action-btn edit-btn"
-                        data-action="edit"
-                        data-event-id="1"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        class="action-btn delete-btn"
-                        data-action="delete"
-                        data-event-id="1"
-                      >
-                        Excluir
-                      </button>
+                    <div class="table-cell-link">
+                      <%= new Date(event.event_date).toLocaleDateString('pt-BR')
+                      %> às <%= event.event_time %>
                     </div>
                   </div>
-                </div>
-
-                <div class="table-row">
-                  <div class="table-data-cell event-name-column">
+                  <div class="table-data-cell participants-column">
                     <div class="table-cell-text">
-                      MasterClass de Marketing Digital
+                      <%= event.street %>, <%= event.number %> - <%=
+                      event.district %>
                     </div>
-                  </div>
-                  <div class="table-data-cell event-date-column">
-                    <a href="detalhesEventos.html" class="table-cell-link"
-                      >15 de Agosto de 2024</a
-                    >
-                  </div>
-                  <div class="table-data-cell participants-column">
-                    <div class="table-cell-text">85</div>
                   </div>
                   <div class="table-data-cell actions-column">
                     <div class="action-buttons">
                       <button
                         class="action-btn edit-btn"
-                        data-action="edit"
-                        data-event-id="2"
+                        onclick="editEvent(<%= event.id %>)"
                       >
                         Editar
                       </button>
                       <button
                         class="action-btn delete-btn"
-                        data-action="delete"
-                        data-event-id="2"
+                        onclick="deleteEvent(<%= event.id %>, '<%= event.name %>')"
                       >
                         Excluir
                       </button>
                     </div>
                   </div>
                 </div>
-
-                <div class="table-row">
-                  <div class="table-data-cell event-name-column">
-                    <div class="table-cell-text">
-                      Conferência de UX/UI Design
-                    </div>
-                  </div>
-                  <div class="table-data-cell event-date-column">
-                    <a href="detalhesEventos.html" class="table-cell-link"
-                      >02 de Setembro de 2024</a
-                    >
-                  </div>
-                  <div class="table-data-cell participants-column">
-                    <div class="table-cell-text">120</div>
-                  </div>
-                  <div class="table-data-cell actions-column">
-                    <div class="action-buttons">
-                      <button
-                        class="action-btn edit-btn"
-                        data-action="edit"
-                        data-event-id="3"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        class="action-btn delete-btn"
-                        data-action="delete"
-                        data-event-id="3"
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="table-row">
-                  <div class="table-data-cell event-name-column">
-                    <div class="table-cell-text">
-                      Workshop de Empreendedorismo
-                    </div>
-                  </div>
-                  <div class="table-data-cell event-date-column">
-                    <a href="detalhesEventos.html" class="table-cell-link"
-                      >25 de Setembro de 2024</a
-                    >
-                  </div>
-                  <div class="table-data-cell participants-column">
-                    <div class="table-cell-text">75</div>
-                  </div>
-                  <div class="table-data-cell actions-column">
-                    <div class="action-buttons">
-                      <button
-                        class="action-btn edit-btn"
-                        data-action="edit"
-                        data-event-id="4"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        class="action-btn delete-btn"
-                        data-action="delete"
-                        data-event-id="4"
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="table-row">
-                  <div class="table-data-cell event-name-column">
-                    <div class="table-cell-text">
-                      Palestra sobre Inteligência Artificial
-                    </div>
-                  </div>
-                  <div class="table-data-cell event-date-column">
-                    <a href="detalhesEventos.html" class="table-cell-link"
-                      >10 de Outubro de 2024</a
-                    >
-                  </div>
-                  <div class="table-data-cell participants-column">
-                    <div class="table-cell-text">95</div>
-                  </div>
-                  <div class="table-data-cell actions-column">
-                    <div class="action-buttons">
-                      <button
-                        class="action-btn edit-btn"
-                        data-action="edit"
-                        data-event-id="5"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        class="action-btn delete-btn"
-                        data-action="delete"
-                        data-event-id="5"
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <% }); %>
               </div>
-
-              <div class="empty-state" style="display: none">
+              <% } else { %>
+              <div class="empty-state">
                 <div class="empty-icon">📅</div>
                 <h3 class="empty-title">Nenhum evento criado ainda</h3>
                 <p class="empty-description">
@@ -221,6 +118,7 @@
                   >Criar Primeiro Evento</a
                 >
               </div>
+              <% } %>
             </section>
           </div>
         </div>
@@ -228,5 +126,46 @@
     </div>
 
     <script src="../scripts.js"></script>
+    <script>
+      // Função para editar evento
+      function editEvent(eventId) {
+        window.location.href = `/evento/${eventId}/editar`;
+      }
+
+      // Função para excluir evento
+      async function deleteEvent(eventId, eventName) {
+        // Confirmar a exclusão
+        const confirmDelete = confirm(
+          `Tem certeza que deseja excluir o evento "${eventName}"?\n\nEsta ação não pode ser desfeita.`
+        );
+
+        if (!confirmDelete) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/evento/${eventId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Sucesso - recarregar a página para atualizar a lista
+            alert('Evento excluído com sucesso!');
+            window.location.reload();
+          } else {
+            // Erro do servidor
+            alert(`Erro ao excluir evento: ${result.error}`);
+          }
+        } catch (error) {
+          console.error('Erro ao excluir evento:', error);
+          alert('Erro ao excluir evento. Tente novamente.');
+        }
+      }
+    </script>
   </body>
 </html>

@@ -50,10 +50,19 @@ app.use('/api', Usersroutes);
 app.use('/', Usersroutes);
 
 app.get('/eventos', eventsController.getAllEvents);
+app.get('/evento/:id', eventsController.showEventDetails);
 app.get('/criarEvento', eventsController.showCreateEventPage);
 app.post('/criarEvento', eventsController.createEvents);
 app.get('/adicionarEndereco', addressController.showAddressForm);
-app.get('/gerenciar', eventsController.updateEvents);
+app.get('/gerenciar', eventsController.showManageEventsPage);
+app.get('/evento/:id/editar', eventsController.showEditEventPage);
+app.post('/evento/:id/editar', eventsController.processEditEvent);
+app.post('/evento/:id/inscrever', eventsController.registerForEvent);
+app.get(
+  '/inscricao-confirmada/:id',
+  eventsController.showRegistrationConfirmation
+);
+app.delete('/evento/:id', eventsController.deleteEvents);
 
 app.get('/', (req, res) => {
   res.render('pages/home');

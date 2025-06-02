@@ -99,6 +99,10 @@ function navigateToEventDetails(eventId) {
   window.location.href = `detalhesEventos.html?id=${eventId}`;
 }
 
+function viewEventDetails(eventId) {
+  window.location.href = `/evento/${eventId}`;
+}
+
 function formatDate(date) {
   return new Date(date).toLocaleDateString('pt-BR');
 }

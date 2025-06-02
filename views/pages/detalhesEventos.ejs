@@ -18,11 +18,9 @@
         <div class="main-layout">
           <div class="events-container">
             <nav class="breadcrumb">
-              <a href="eventos.html" class="breadcrumb-item">Eventos</a>
+              <a href="/eventos" class="breadcrumb-item">Eventos</a>
               <span class="breadcrumb-separator">/</span>
-              <span class="breadcrumb-current"
-                >Conferência de Inovação em Tecnologia</span
-              >
+              <span class="breadcrumb-current"><%= event.name %></span>
             </nav>
 
             <section class="event-hero">
@@ -30,7 +28,7 @@
                 <div class="hero-image">
                   <img
                     src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-                    alt="Conferência de Inovação em Tecnologia"
+                    alt="<%= event.name %>"
                     style="width: 100%; height: 100%; object-fit: cover"
                   />
                 </div>
@@ -38,6 +36,34 @@
             </section>
 
             <section>
+              <% if (typeof error !== 'undefined' && error) { %>
+              <div
+                class="error-message"
+                style="
+                  background-color: #fee;
+                  color: #c33;
+                  padding: 10px;
+                  border-radius: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                <%= error %>
+              </div>
+              <% } %> <% if (typeof success !== 'undefined' && success) { %>
+              <div
+                class="success-message"
+                style="
+                  background-color: #efe;
+                  color: #363;
+                  padding: 10px;
+                  border-radius: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                <%= success %>
+              </div>
+              <% } %>
+
               <h2 class="section-header">Detalhes do Evento</h2>
 
               <div class="details-grid">
@@ -45,22 +71,29 @@
                   <div class="detail-item">
                     <div class="detail-label">Data e Hora</div>
                     <div class="detail-value">
-                      Sábado, 15 de Julho, 10:00 - 18:00
+                      <%= new Date(event.event_date).toLocaleDateString('pt-BR',
+                      { weekday: 'long', day: '2-digit', month: 'long', year:
+                      'numeric' }) %>, <%= event.event_time %>
                     </div>
                   </div>
                   <div class="detail-item">
                     <div class="detail-label">Localização</div>
-                    <div class="detail-value">Centro de Convenções, Lisboa</div>
+                    <div class="detail-value">
+                      <%= event.street %>, <%= event.number %> - <%=
+                      event.district %>, CEP: <%= event.cep %>
+                    </div>
                   </div>
                 </div>
                 <div class="details-row">
                   <div class="detail-item">
                     <div class="detail-label">Organizador</div>
-                    <div class="detail-value">Tech Solutions Inc.</div>
+                    <div class="detail-value">
+                      <%= event.organizer_name || 'Organizador' %>
+                    </div>
                   </div>
                   <div class="detail-item">
                     <div class="detail-label">Tipo de Evento</div>
-                    <div class="detail-value">Conferência</div>
+                    <div class="detail-value">Evento</div>
                   </div>
                 </div>
               </div>
@@ -70,35 +103,30 @@
               <h2 class="section-header">Sobre o Evento</h2>
 
               <div class="event-description">
-                <p>
-                  A Conferência de Inovação em Tecnologia é um evento de um dia
-                  inteiro dedicado às últimas tendências e inovações no setor de
-                  tecnologia. O evento contará com palestrantes renomados,
-                  workshops interativos e oportunidades de networking.
-                </p>
-
-                <p>
-                  Você terá a oportunidade de aprender sobre inteligência
-                  artificial, blockchain, desenvolvimento sustentável de
-                  software e muito mais. Nossos especialistas compartilharão
-                  insights valiosos e experiências práticas que podem
-                  transformar sua carreira e negócios.
-                </p>
-
-                <p>
-                  Não perca esta chance única de se conectar com profissionais
-                  da área, descobrir novas tecnologias e expandir sua rede de
-                  contatos. Inscrições limitadas!
-                </p>
+                <p><%= event.description %></p>
               </div>
 
               <div class="registration-section">
-                <button
-                  class="register-btn"
-                  onclick="handleEventRegistration(event)"
-                >
-                  Registrar
-                </button>
+                <% if (user && event.user_id !== user.id) { %>
+                <form method="POST" action="/evento/<%= event.id %>/inscrever">
+                  <button type="submit" class="register-btn">
+                    Inscrever-se
+                  </button>
+                </form>
+                <% } else if (user && event.user_id === user.id) { %>
+                <p style="color: #666; text-align: center; margin: 20px 0">
+                  Este é o seu evento.
+                  <a
+                    href="/evento/<%= event.id %>/editar"
+                    style="color: #007bff"
+                    >Editar evento</a
+                  >
+                </p>
+                <% } else { %>
+                <a href="/login" class="register-btn">
+                  Faça login para se inscrever
+                </a>
+                <% } %>
               </div>
             </section>
           </div>
