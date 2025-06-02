@@ -125,26 +125,80 @@
       </main>
     </div>
 
+    <!-- Modal de confirmação para exclusão -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-icon">🗑️</div>
+          <h2 class="modal-title">Excluir Evento</h2>
+          <p class="modal-message">
+            Tem certeza que deseja excluir este evento?
+          </p>
+        </div>
+        <div class="modal-body">
+          <div class="modal-event-name" id="eventNameDisplay"></div>
+          <div class="modal-warning">
+            ⚠️ Esta ação não pode ser desfeita. Todos os dados do evento serão perdidos permanentemente.
+          </div>
+          <div class="modal-actions">
+            <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">
+              Cancelar
+            </button>
+            <button class="modal-btn modal-btn-delete" id="confirmDeleteBtn">
+              Excluir Evento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="../scripts.js"></script>
     <script>
+      // Variáveis globais para o modal
+      let currentEventId = null;
+      let currentEventName = null;
+
       // Função para editar evento
       function editEvent(eventId) {
         window.location.href = `/evento/${eventId}/editar`;
       }
 
-      // Função para excluir evento
-      async function deleteEvent(eventId, eventName) {
-        // Confirmar a exclusão
-        const confirmDelete = confirm(
-          `Tem certeza que deseja excluir o evento "${eventName}"?\n\nEsta ação não pode ser desfeita.`
-        );
+      // Função para abrir modal de exclusão
+      function deleteEvent(eventId, eventName) {
+        currentEventId = eventId;
+        currentEventName = eventName;
+        
+        // Atualizar o conteúdo do modal
+        document.getElementById('eventNameDisplay').textContent = eventName;
+        
+        // Mostrar o modal
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('active');
+        
+        // Configurar o botão de confirmação
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+        confirmBtn.onclick = confirmDeleteEvent;
+      }
 
-        if (!confirmDelete) {
-          return;
-        }
+      // Função para fechar o modal
+      function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.remove('active');
+        currentEventId = null;
+        currentEventName = null;
+      }
+
+      // Função para confirmar a exclusão
+      async function confirmDeleteEvent() {
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+        
+        // Adicionar estado de loading
+        confirmBtn.disabled = true;
+        confirmBtn.classList.add('loading');
+        confirmBtn.textContent = 'Excluindo...';
 
         try {
-          const response = await fetch(`/evento/${eventId}`, {
+          const response = await fetch(`/evento/${currentEventId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -154,18 +208,107 @@
           const result = await response.json();
 
           if (response.ok) {
-            // Sucesso - recarregar a página para atualizar a lista
-            alert('Evento excluído com sucesso!');
-            window.location.reload();
+            // Sucesso - mostrar mensagem e recarregar a página
+            closeDeleteModal();
+            
+            // Mostrar mensagem de sucesso temporária
+            showSuccessMessage('Evento excluído com sucesso!');
+            
+            // Recarregar após um delay para mostrar a mensagem
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
           } else {
             // Erro do servidor
-            alert(`Erro ao excluir evento: ${result.error}`);
+            showErrorMessage(`Erro ao excluir evento: ${result.error}`);
+            resetDeleteButton();
           }
         } catch (error) {
           console.error('Erro ao excluir evento:', error);
-          alert('Erro ao excluir evento. Tente novamente.');
+          showErrorMessage('Erro ao excluir evento. Tente novamente.');
+          resetDeleteButton();
         }
       }
+
+      // Função para resetar o botão de exclusão
+      function resetDeleteButton() {
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+        confirmBtn.disabled = false;
+        confirmBtn.classList.remove('loading');
+        confirmBtn.textContent = 'Excluir Evento';
+      }
+
+      // Função para mostrar mensagem de sucesso
+      function showSuccessMessage(message) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background-color: #f0fdf4;
+          color: #059669;
+          padding: 16px 20px;
+          border-radius: 8px;
+          border: 1px solid #bbf7d0;
+          font-size: 14px;
+          font-weight: 500;
+          z-index: 3000;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        `;
+        successDiv.textContent = message;
+        document.body.appendChild(successDiv);
+
+        // Remover após 3 segundos
+        setTimeout(() => {
+          if (successDiv.parentNode) {
+            successDiv.parentNode.removeChild(successDiv);
+          }
+        }, 3000);
+      }
+
+      // Função para mostrar mensagem de erro
+      function showErrorMessage(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background-color: #fef2f2;
+          color: #dc2626;
+          padding: 16px 20px;
+          border-radius: 8px;
+          border: 1px solid #fecaca;
+          font-size: 14px;
+          font-weight: 500;
+          z-index: 3000;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        `;
+        errorDiv.textContent = message;
+        document.body.appendChild(errorDiv);
+
+        // Remover após 5 segundos
+        setTimeout(() => {
+          if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+          }
+        }, 5000);
+      }
+
+      // Fechar modal ao clicar no overlay
+      document.getElementById('deleteModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeDeleteModal();
+        }
+      });
+
+      // Fechar modal com tecla ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeDeleteModal();
+        }
+      });
     </script>
   </body>
 </html>
