@@ -70,7 +70,6 @@ const deleteAddress = async (req, res) => {
 };
 
 const showAddressForm = (req, res) => {
-  // Verificar se o usuário está logado
   if (!req.session.user) {
     return res.redirect('/login');
   }

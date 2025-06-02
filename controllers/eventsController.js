@@ -108,9 +108,15 @@ const createEvents = async (req, res) => {
       description,
     });
 
+    const events = await eventsModel.getByUserId(req.session.user.id);
     req.session.success = 'Evento criado com sucesso!';
 
-    res.render('pages/gerenciar');
+    res.render('pages/gerenciar', {
+      events,
+      user: req.session.user,
+      success: req.session.success,
+      error: null,
+    });
   } catch (error) {
     res.render('pages/criarEvento', {
       error: 'Erro ao criar evento: ' + error.message,
@@ -144,10 +150,8 @@ const updateEvents = async (req, res) => {
   }
 };
 
-// Função para mostrar a página de gerenciar eventos do usuário
 const showManageEventsPage = async (req, res) => {
   try {
-    // Verificar se o usuário está logado
     if (!req.session.user) {
       return res.redirect('/login');
     }

@@ -455,6 +455,10 @@ button.login:hover {
   line-height: 24px;
 }
 
+.register-btn {
+  width: 120%;
+}
+
 .create-event-btn {
   margin-top: 24px;
 }
@@ -588,9 +592,10 @@ button.login:hover {
 }
 
 .hero-section {
-  padding: 120px 40px 80px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-container {
@@ -599,7 +604,6 @@ button.login:hover {
   gap: 60px;
   align-items: center;
 }
-
 .hero-image {
   border-radius: 16px;
   overflow: hidden;
@@ -608,12 +612,11 @@ button.login:hover {
 
 .hero-image img {
   width: 100%;
-  height: 400px;
+  height: 1000px;
   object-fit: cover;
   display: block;
 }
-
-.hero-content h1 {
+*/ .hero-content h1 {
   font-size: 48px;
   font-weight: 800;
   color: #4f46e5;
@@ -630,12 +633,12 @@ button.login:hover {
 
 .features-section {
   background: #f9fafb;
-  padding: 80px 40px;
+  padding: 100px 200px;
 }
 
 .features-container {
   max-width: 1200px;
-  margin: 0 auto;
+  padding: 200px;
   text-align: center;
 }
 
@@ -1238,305 +1241,92 @@ button.login:hover {
   display: block;
 }
 
-@media (max-width: 968px) {
-  .hero-container {
-    grid-template-columns: 1fr;
+.home-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.hero-main {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 200px 40px;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image {
+  flex: 1;
+  max-width: 1200px;
+  max-height: 1200px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.hero-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #4f46e5;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .hero-main,
+  .hero-inner {
+    flex-direction: column;
     gap: 40px;
     text-align: center;
   }
 
-  .hero-section {
-    padding: 100px 24px 60px;
-  }
-
-  .hero-content h1 {
+  .hero-title {
     font-size: 36px;
   }
 
-  .content-layout {
-    flex-direction: column;
-    padding: 20px 24px 40px;
-  }
-
-  .filters-sidebar {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .form-sections {
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .create-form-left,
-  .create-form-right {
-    min-width: 100%;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .header {
-    padding: 16px 24px;
-  }
-
-  .main-layout {
-    padding: 16px;
-  }
-
-  .page-header {
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
-  }
-
-  .create-event-link {
-    text-align: center;
-  }
-
-  .details-row {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .detail-item {
-    min-width: 100%;
-    padding: 16px 0;
-  }
-
-  .section-header {
-    font-size: 20px;
-    padding: 16px 16px 8px 16px;
-  }
-
-  .confirmation-content {
-    width: 100%;
-    padding: 16px;
-  }
-
-  .confirmation-title {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
-  .confirmation-title::before {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
+  .hero-subtitle {
     font-size: 16px;
-    margin-right: 12px;
-  }
-
-  .image-upload {
-    height: 300px;
-    max-width: 100%;
-  }
-
-  .form-section {
-    padding: 16px;
-  }
-
-  .form-title {
-    font-size: 28px;
-    text-align: center;
-  }
-
-  .table {
-    overflow-x: auto;
-    min-width: 600px;
-  }
-
-  .table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .action-buttons {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .action-btn {
-    width: 100%;
-    font-size: 11px;
-    padding: 4px 8px;
-  }
-}
-
-@media (max-width: 640px) {
-  .header {
-    padding: 12px 16px;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .header-buttons {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .search-container {
-    flex: 1;
-    max-width: none;
-    min-width: 120px;
-  }
-
-  .btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    min-width: 80px;
-  }
-
-  .logo-text {
-    font-size: 20px;
-  }
-
-  .hero-section {
-    padding: 40px 16px;
-  }
-
-  .hero-content h1 {
-    font-size: 32px;
-  }
-
-  .hero-content p {
-    font-size: 16px;
-  }
-
-  .features-section {
-    padding: 40px 16px;
-  }
-
-  .section-title {
-    font-size: 24px;
-  }
-
-  .feature-card {
-    padding: 32px 20px;
-  }
-
-  .breadcrumb {
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-    text-align: center;
-  }
-
-  .breadcrumb-separator {
-    display: none;
-  }
-
-  .event-hero {
-    height: 250px;
   }
 
   .hero-image {
-    height: 220px;
+    max-width: 100%;
   }
 
-  .section-header {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .event-description p {
-    font-size: 14px;
-    line-height: 22px;
-  }
-
-  .confirmation-title {
-    font-size: 20px;
-    line-height: 28px;
-    text-align: center;
-  }
-
-  .confirmation-text {
-    font-size: 14px;
-    padding: 4px 8px 12px 8px;
-  }
-
-  .registration-section {
-    justify-content: center;
-    padding: 16px;
-  }
-
-  .register-btn {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .action-section {
-    margin-top: 32px;
-  }
-
-  .create-event-btn {
-    font-size: 14px;
-    height: 44px;
-  }
-
-  .form-title {
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  .upload-content {
-    padding: 24px;
-  }
-
-  .upload-icon {
-    font-size: 32px;
-  }
-
-  .upload-text {
-    font-size: 14px;
-  }
-
-  .upload-subtitle {
-    font-size: 12px;
-  }
-
-  .page-title {
-    font-size: 24px;
-  }
-
-  .empty-state {
-    padding: 40px 16px;
-  }
-
-  .empty-icon {
-    font-size: 36px;
-  }
-
-  .empty-title {
-    font-size: 18px;
-  }
-
-  .empty-description {
-    font-size: 14px;
-  }
-
-  .event-content {
-    flex-direction: column;
-  }
-
-  .event-image {
-    height: 200px;
-    width: 100%;
-  }
-
-  .event-info {
-    min-width: 100%;
-    padding: 16px 0;
-  }
-
-  .filter-tags {
-    padding: 8px 12px;
-  }
-
-  .filter-tag {
-    font-size: 12px;
-    height: 28px;
-    padding: 0 12px;
+  .hero-image img {
+    height: 300px;
   }
 }
 

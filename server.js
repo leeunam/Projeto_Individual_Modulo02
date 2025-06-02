@@ -58,10 +58,7 @@ app.get('/gerenciar', eventsController.showManageEventsPage);
 app.get('/evento/:id/editar', eventsController.showEditEventPage);
 app.post('/evento/:id/editar', eventsController.processEditEvent);
 app.post('/evento/:id/inscrever', eventsController.registerForEvent);
-app.get(
-  '/inscricao-confirmada/:id',
-  eventsController.showRegistrationConfirmation
-);
+app.get('/inscricao-confirmada/:id',eventsController.showRegistrationConfirmation);
 app.delete('/evento/:id', eventsController.deleteEvents);
 
 app.get('/', (req, res) => {
