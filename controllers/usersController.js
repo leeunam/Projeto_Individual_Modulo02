@@ -61,7 +61,7 @@ const processLogin = async (req, res) => {
 };
 
 const showRegister = (req, res) => {
-  res.render('pages/registrar', { error: null, success: null });
+  res.render('pages/register', { error: null, success: null });
 };
 
 const processRegister = async (req, res) => {
@@ -71,14 +71,14 @@ const processRegister = async (req, res) => {
     console.log('Dados recebidos para registro:', { name, email, role });
 
     if (!name || !email || !password || !role) {
-      return res.render('pages/registrar', {
+      return res.render('pages/register', {
         error: 'Todos os campos são obrigatórios.',
         success: null,
       });
     }
 
     if (role !== 'organizador' && role !== 'participante') {
-      return res.render('pages/registrar', {
+      return res.render('pages/register', {
         error: 'Tipo de usuário inválido. Escolha Organizador ou Participante.',
         success: null,
       });
@@ -86,7 +86,7 @@ const processRegister = async (req, res) => {
 
     const existingUser = await usersModel.findByEmail(email);
     if (existingUser) {
-      return res.render('pages/registrar', {
+      return res.render('pages/register', {
         error: 'Este email já está cadastrado. Use outro email ou faça login.',
         success: null,
       });
@@ -102,7 +102,7 @@ const processRegister = async (req, res) => {
 
     res.redirect('/eventos');
   } catch (error) {
-    res.render('pages/registrar', {
+    res.render('pages/register', {
       error:
         'Erro ao criar usuário. Tente novamente. Detalhes: ' + error.message,
       success: null,

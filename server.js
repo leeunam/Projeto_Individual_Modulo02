@@ -21,21 +21,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: 'sua-chave-secreta-aqui', // Em produção, use uma chave secreta forte
+    secret: 'sua-chave-secreta-aqui',
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // true apenas em HTTPS
-      maxAge: 24 * 60 * 60 * 1000, // 24 horas
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
     },
   })
 );
 
-// Middleware para arquivos estáticos específicos
 app.use('/style.css', express.static(path.join(__dirname, 'views/style.css')));
 app.use('/scripts.js', express.static(path.join(__dirname, 'views/scripts.js')));
 
-// Middleware para servir outros arquivos estáticos das pastas específicas
 app.use('/pages', express.static(path.join(__dirname, 'views/pages')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 

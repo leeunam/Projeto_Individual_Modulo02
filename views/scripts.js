@@ -32,7 +32,7 @@ function handleLogin(event) {
 
 function handleRegister(event) {
   event.preventDefault();
-  window.location.href = '/registrar';
+  window.location.href = '/register';
 }
 
 function createEvent(event) {

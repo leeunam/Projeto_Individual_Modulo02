@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS 'address' (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'street' VARCHAR(200) NOT NULL,
+    'number' INTEGER NOT NULL,
+    'district' VARCHAR(200) NOT NULL,
+    'cep' VARCHAR(10) NOT NULL,
+);
